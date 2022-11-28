@@ -1,6 +1,6 @@
 <template>
   <div>
-    <message-form @sent-message="addMessage"></message-form>
+    <message-form @sent-message="gotMessage"></message-form>
     <hr />
     <div class="list-unstyled" v-for="message in messages" :key="message.id">
       <li class="media">
@@ -40,8 +40,7 @@ export default {
       const response = await fetch("http://localhost:4000/messages");
       this.messages = await response.json();
     },
-    async addMessage(message) {
-      console.log(message);
+    async gotMessage(message) {
       const response = await fetch("http://localhost:4000/messages", {
         method: "POST",
         mode: "cors",
@@ -52,8 +51,12 @@ export default {
       }
       );
       const result = await response.json()
-      this.messages.push(result)
+      this.addMessage(result)
     },
+    addMessage(message){
+        this.messages.push(message)
+        this.fetchMessages()
+    }
   },
 };
 </script>
