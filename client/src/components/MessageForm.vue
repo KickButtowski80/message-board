@@ -13,6 +13,7 @@
           type="text"
           class="form-control"
           id="username"
+          placeholder="Enter a username"
           required
         />
       </div>
@@ -33,6 +34,7 @@
           v-model="message.message"
           class="form-control"
           id="message"
+          placeholder="Enter some message..."
           rows="3"
         ></textarea>
       </div>
