@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const db = require('./connection');
-const uniqid = require('uniqid')
+const uniqid = require('uniqid');
+const { saveToDatabase } = require('./utils');
 
 
 const schema = Joi.object().keys({
@@ -9,7 +10,7 @@ const schema = Joi.object().keys({
     message: Joi.string().max(500).required(),
 });
 
-const {messages} = db;
+const { messages } = db;
 
 function getAll() {
     return messages;
@@ -17,13 +18,14 @@ function getAll() {
 
 function create(message) {
     if (!message.username)
-     message.username = 'Anonymous';
+        message.username = 'Anonymous';
     const result = schema.validate(message);
 
     if (result.error == null) {
-        message = {id: uniqid(), ...message, created: new Date()}
-       messages.unshift(message);
-       return Promise.resolve(messages)
+        message = { id: uniqid(), ...message, created: new Date() }
+        messages.unshift(message);
+        saveToDatabase(messages)
+        return Promise.resolve(messages)
     } else {
         return Promise.reject(result.error);
     }
