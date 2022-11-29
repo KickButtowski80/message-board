@@ -25,7 +25,8 @@ function create(message) {
         message = { id: uniqid(), ...message, created: new Date() }
         messages.unshift(message);
         saveToDatabase(messages)
-        return Promise.resolve(messages)
+        // return Promise.resolve(messages)
+        return messages
     } else {
         return Promise.reject(result.error);
     }
