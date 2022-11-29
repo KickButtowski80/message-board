@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/messages', async (req,res) => {
-   const messagesDB = await messages.getAll()
+app.get('/messages', (req,res) => {
+   const messagesDB = messages.getAll()
    res.status(200).json(messagesDB)
 })
 
