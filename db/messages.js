@@ -16,18 +16,18 @@ function getAll() {
 }
 
 function create(message) {
-    if (!message.username) message.username = 'Anonymous';
-
+    if (!message.username)
+        message.username = 'Anonymous';
     const result = schema.validate(message);
+
     if (result.error == null) {
-        // message.created = new Date();
         message = { id: uniqid(), ...message }
         message.created = new Date();
         messages.unshift(message);
         saveToDatabase(db)
-        return message;
+        return messages;
     } else {
-        return Promise.reject(result.error);
+        return result.error;
     }
 }
 

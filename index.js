@@ -21,12 +21,13 @@ app.get('/messages', (req,res) => {
    res.status(200).json(messagesDB)
 })
 
-app.post('/messages', async (req, res) => {
-    const message = await messages.create(req.body)
+app.post('/messages',  (req, res) => {
+    const message =  messages.create(req.body)
     res.status(200).json(message)
+
 })
 
-const port =  4000
+const port = 4000
 
 app.listen(port, () => {
     console.log(`listening on ${port}`)
