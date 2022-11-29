@@ -12,7 +12,9 @@ const schema = Joi.object().keys({
 const { messages } = db;
 
 function getAll() {
-    return messages;
+    if (messages.length === 0)
+        return Promise.reject('messages array is empty')
+    return Promise.resolve(messages);
 }
 
 function create(message) {
@@ -25,9 +27,9 @@ function create(message) {
         message.created = new Date();
         messages.unshift(message);
         saveToDatabase(db)
-        return messages;
+        return Promise.resolve(messages);
     } else {
-        return result.error;
+        return Promise.reject(result.error);
     }
 }
 

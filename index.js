@@ -16,13 +16,14 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/messages', (req,res) => {
-   const messagesDB = messages.getAll()
+app.get('/messages', async (req,res) => {
+   const messagesDB = await messages.getAll()
    res.status(200).json(messagesDB)
 })
 
-app.post('/messages',  (req, res) => {
-    const message =  messages.create(req.body)
+app.post('/messages',  async (req, res) => {
+    const message =  await messages.create(req.body)
+    console.log('post', {message})
     res.status(200).json(message)
 
 })

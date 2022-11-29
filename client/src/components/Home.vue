@@ -42,21 +42,19 @@ export default {
       this.messages = await response.json();
     },
     async gotMessage(message) {
-        const response = await fetch("http://localhost:4000/messages", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(message),
-        });
-        console.log('response', {response})
-        const result = await response.json();
-        this.addMessage(result);
+      const response = await fetch("http://localhost:4000/messages", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+      });
+      const result = await response.json();
+      this.addMessage({created: result[0].created, ...message});
     },
     addMessage(message) {
-      this.messages.push(message);
-      this.fetchMessages();
+      this.messages.unshift(message);
     },
   },
 };
