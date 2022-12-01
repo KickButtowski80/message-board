@@ -55,6 +55,7 @@
 
 <script>
 export default {
+  emits: ['sent-message'],
   data() {
     return {
       error: "",
